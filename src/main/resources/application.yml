@@ -15,4 +15,13 @@ app:
   integration:
     base-url: http://localhost:8082
 
-
+  cache:
+    cacheType: inMemory
+    cache-names:
+      - databaseEntities
+      - databaseEntityByName
+    caches:
+      databaseEntities:
+        expiry: 5s
+      databaseEntityByName:
+        expiry: 10s

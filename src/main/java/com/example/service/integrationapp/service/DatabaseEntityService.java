@@ -3,6 +3,7 @@ package com.example.service.integrationapp.service;
 import com.example.service.integrationapp.entity.DatabaseEntity;
 import com.example.service.integrationapp.repository.DatabaseEntityRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
@@ -15,11 +16,13 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class DatabaseEntityService {
     private final DatabaseEntityRepository repository;
 
     @Cacheable("databaseEntities")
     public List<DatabaseEntity> findAll() {
+        log.info("findAll");
         return repository.findAll();
     }
 
@@ -35,6 +38,7 @@ public class DatabaseEntityService {
                 .withIgnoreNullValues()
                 .withIgnorePaths("id", "date");
         Example<DatabaseEntity> example = Example.of(probe, matcher);
+        log.info("findByName {}", name);
         return repository.findOne(example).orElseThrow();
     }
 
