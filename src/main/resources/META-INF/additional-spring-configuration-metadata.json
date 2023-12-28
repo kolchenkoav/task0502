@@ -1,0 +1,13 @@
+{
+  "properties": [
+    {
+      "name": "app.redis.enable",
+      "type": "java.lang.String",
+      "description": "Description for app.redis.enable."
+    },
+    {
+      "name": "app.integration.base-url",
+      "type": "java.lang.String",
+      "description": "Description for app.integration.base-url."
+    }
+  ] }

@@ -17,7 +17,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/v1/client/entity")
 @RequiredArgsConstructor
-public class EntityClientController implements Serializable {
+public class EntityClientController {
     private final OpenFeignClient client;
     private final DatabaseEntityService service;
 

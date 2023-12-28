@@ -19,8 +19,8 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-@CacheConfig(cacheManager = "inMemoryCacheManager")
-public class DatabaseEntityService implements Serializable {
+@CacheConfig(cacheManager = "redisCacheManager")
+public class DatabaseEntityService {
     private final DatabaseEntityRepository repository;
 
     @Cacheable("databaseEntities")

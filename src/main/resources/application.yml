@@ -3,6 +3,7 @@ spring:
     redis:
       host: localhost
       port: 6379
+
   jpa:
     generate-ddl: true
     open-in-view: false
@@ -17,17 +18,17 @@ spring:
 
 app:
   redis:
-    enable: false
+    enable: true
   integration:
     base-url: http://localhost:8082
 
   cache:
-    cacheType: in_memory
+    cacheType: REDIS
     cache-names:
       - databaseEntities
       - databaseEntityByName
     caches:
       databaseEntities:
-        expiry: 10m
+        expiry: 1m
       databaseEntityByName:
-        expiry: 10m
+        expiry: 1m
