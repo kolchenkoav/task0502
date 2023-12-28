@@ -4,6 +4,7 @@ import com.example.service.integrationapp.entity.DatabaseEntity;
 import com.example.service.integrationapp.repository.DatabaseEntityRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
@@ -11,13 +12,15 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class DatabaseEntityService {
+@CacheConfig(cacheManager = "inMemoryCacheManager")
+public class DatabaseEntityService implements Serializable {
     private final DatabaseEntityRepository repository;
 
     @Cacheable("databaseEntities")

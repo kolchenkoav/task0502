@@ -1,11 +1,8 @@
 package com.example.service.integrationapp.controller;
 
-import com.example.service.integrationapp.clients.OkHttpClientSender;
-import com.example.service.integrationapp.clients.OpenFeignClient;
-import com.example.service.integrationapp.clients.RestTemplateClient;
-import com.example.service.integrationapp.clients.WebClientSender;
-import com.example.service.integrationapp.entity.DatabaseEntity;
 import com.example.service.integrationapp.model.EntityModel;
+import com.example.service.integrationapp.clients.OpenFeignClient;
+import com.example.service.integrationapp.entity.DatabaseEntity;
 import com.example.service.integrationapp.model.UpsertEntityRequest;
 import com.example.service.integrationapp.service.DatabaseEntityService;
 import lombok.RequiredArgsConstructor;
@@ -13,14 +10,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/client/entity")
 @RequiredArgsConstructor
-public class EntityClientController {
+public class EntityClientController implements Serializable {
     private final OpenFeignClient client;
     private final DatabaseEntityService service;
 
