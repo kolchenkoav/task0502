@@ -10,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
 
@@ -25,6 +24,13 @@ public class EntityClientController {
     public ResponseEntity<List<EntityModel>> entityList() {
         return ResponseEntity.ok(
                 service.findAll().stream().map(EntityModel::from).toList()
+        );
+    }
+
+    @GetMapping("/by-id/{id}")
+    public ResponseEntity<EntityModel> entityById(@PathVariable UUID id) {
+        return ResponseEntity.ok(
+                EntityModel.from(service.findById(id))
         );
     }
 

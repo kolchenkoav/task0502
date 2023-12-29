@@ -1,6 +1,5 @@
 package com.example.service.integrationapp.controller;
 
-import com.example.service.integrationapp.clients.OkHttpClientSender;
 import com.example.service.integrationapp.clients.OpenFeignClient;
 import lombok.RequiredArgsConstructor;
 
@@ -15,9 +14,6 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/api/v1/client/file")
 @RequiredArgsConstructor
 public class FileClientController {
-    //private final OkHttpClientSender client;
-    //private final RestTemplateClient client;
-    //private final WebClientSender client;
     private final OpenFeignClient client;
 
     @PostMapping("/upload")

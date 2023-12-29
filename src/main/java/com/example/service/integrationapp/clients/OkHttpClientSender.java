@@ -1,5 +1,6 @@
 package com.example.service.integrationapp.clients;
 
+import com.example.service.integrationapp.exception.ResponseException;
 import com.example.service.integrationapp.model.EntityModel;
 import com.example.service.integrationapp.model.UpsertEntityRequest;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -28,6 +29,7 @@ public class OkHttpClientSender {
 
     @Value("${app.integration.base-url}")
     private String baseUrl;
+    private static final String BASEURL_ADD = "/api/v1/entity/";
 
     @SneakyThrows
     public String uploadFile(MultipartFile file) {
@@ -70,7 +72,6 @@ public class OkHttpClientSender {
         }
     }
 
-    // 26:51   -  41:50
     public List<EntityModel> getEntityList() {
         Request request = new Request.Builder()
                 .url(baseUrl + "/api/v1/entity")
@@ -81,7 +82,7 @@ public class OkHttpClientSender {
 
     public EntityModel getEntityByName(String name) {
         Request request = new Request.Builder()
-                .url(baseUrl + "/api/v1/entity/" + name)
+                .url(baseUrl + BASEURL_ADD + name)
                 .build();
         return processResponses(request, new TypeReference<>() {
         });
@@ -89,10 +90,10 @@ public class OkHttpClientSender {
 
     @SneakyThrows
     public EntityModel createEntity(UpsertEntityRequest request) {
-        MediaType JSON = MediaType.get("application/json;charset=utf-8");
+        MediaType json = MediaType.get("application/json;charset=utf-8");
         String requestBody = objectMapper.writeValueAsString(request);
 
-        RequestBody body = RequestBody.create(requestBody, JSON);
+        RequestBody body = RequestBody.create(requestBody, json);
 
         Request httpRequest = new Request.Builder()
                 .url(baseUrl + "/api/v1/entity")
@@ -105,13 +106,13 @@ public class OkHttpClientSender {
 
     @SneakyThrows
     public EntityModel updateEntity(UUID id, UpsertEntityRequest request) {
-        MediaType JSON = MediaType.get("application/json;charset=utf-8");
+        MediaType json = MediaType.get("application/json;charset=utf-8");
         String requestBody = objectMapper.writeValueAsString(request);
 
-        RequestBody body = RequestBody.create(requestBody, JSON);
+        RequestBody body = RequestBody.create(requestBody, json);
 
         Request httpRequest = new Request.Builder()
-                .url(baseUrl + "/api/v1/entity/" + id)
+                .url(baseUrl + BASEURL_ADD + id)
                 .put(body)
                 .build();
 
@@ -122,13 +123,13 @@ public class OkHttpClientSender {
     @SneakyThrows
     public void deleteEntityById(UUID id) {
         Request request = new Request.Builder()
-                .url(baseUrl + "/api/v1/entity/" + id)
+                .url(baseUrl + BASEURL_ADD + id)
                 .delete()
                 .build();
 
         try (Response response = httpClient.newCall(request).execute()) {
             if (!response.isSuccessful()) {
-                throw new RuntimeException("Unexpected response code: " + response);
+                throw new ResponseException("Unexpected response code: " + response);
             }
         }
     }
@@ -137,14 +138,14 @@ public class OkHttpClientSender {
     private <T> T processResponses(Request request, TypeReference<T> typeReference) {
         try (Response response = httpClient.newCall(request).execute()) {
             if (!response.isSuccessful()) {
-                throw new RuntimeException("Unexpected response code: " + response);
+                throw new ResponseException("Unexpected response code: " + response);
             }
             ResponseBody responseBody = response.body();
             if (responseBody != null) {
                 String stringBody = responseBody.string();
                 return objectMapper.readValue(stringBody, typeReference);
             } else {
-                throw new RuntimeException("Response body is empty");
+                throw new ResponseException("Response body is empty");
             }
         }
     }

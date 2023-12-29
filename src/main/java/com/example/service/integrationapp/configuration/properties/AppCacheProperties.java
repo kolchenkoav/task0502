@@ -22,9 +22,12 @@ public class AppCacheProperties {
         private Duration expiry = Duration.ZERO;
     }
 
-    public interface CacheNames {
-        String DATABASE_ENTITIES = "databaseEntities";
-        String DATABASE_ENTITIES_BY_NAME = "databaseEntityByName";
+    public static final class CacheNames {
+        public static final String DATABASE_ENTITIES = "databaseEntities";
+        public static final String DATABASE_ENTITIES_BY_ID = "databaseEntityById";
+        public static final String DATABASE_ENTITIES_BY_NAME = "databaseEntityByName";
+
+        private CacheNames() {}
     }
 
     public enum CacheType {

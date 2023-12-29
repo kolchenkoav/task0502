@@ -27,8 +27,11 @@ app:
     cache-names:
       - databaseEntities
       - databaseEntityByName
+      - databaseEntityById
     caches:
       databaseEntities:
-        expiry: 1m
+        expiry: 10m
       databaseEntityByName:
-        expiry: 1m
+        expiry: 10m
+      databaseEntityById:
+        expiry: 10m

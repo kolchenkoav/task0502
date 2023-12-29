@@ -55,7 +55,7 @@ public class CacheConfiguration {
     @ConditionalOnProperty(prefix = "app.redis", name = "enable", havingValue = "true")
     @ConditionalOnExpression("'${app.cache.cacheType}'.equals('REDIS')")
     public CacheManager redisCacheManager(AppCacheProperties appCacheProperties,
-                                          JedisConnectionFactory jedisConnectionFactory) {
+                                          LettuceConnectionFactory lettuceConnectionFactory) {
         log.info("=> CacheManager redisCacheManager ");
         var defaultConfig = RedisCacheConfiguration.defaultCacheConfig();
         Map<String, RedisCacheConfiguration> redisCacheConfigurationMap = new HashMap<>();
@@ -65,7 +65,7 @@ public class CacheConfiguration {
                                 appCacheProperties.getCaches().get(cacheName).getExpiry()
                         )));
 
-        return RedisCacheManager.builder(jedisConnectionFactory)
+        return RedisCacheManager.builder(lettuceConnectionFactory)
                 .cacheDefaults(defaultConfig)
                 .withInitialCacheConfigurations(redisCacheConfigurationMap)
                 .build();
