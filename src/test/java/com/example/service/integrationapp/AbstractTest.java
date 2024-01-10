@@ -130,8 +130,20 @@ public class AbstractTest {
                         .withHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)
                         .withBody(objectMapper.writeValueAsString(createResponseBody))
                         .withStatus(201)));
-        //21:10
 
+        UpsertEntityRequest updateRequest = new UpsertEntityRequest();
+        updateRequest.setName("updatedName");
+        EntityModel updateResponseBody = new EntityModel(UPDATE_ID, "updatedName", ENTITY_DATE);
+
+        wireMockServer.stubFor(WireMock.put("/api/v1/entity/" + UPDATE_ID)
+                .withRequestBody(equalToJson(objectMapper.writeValueAsString(updateRequest)))
+                .willReturn(aResponse()
+                        .withHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)
+                        .withBody(objectMapper.writeValueAsString(updateResponseBody))
+                        .withStatus(200)));
+
+        wireMockServer.stubFor(WireMock.delete("/api/v1/entity/" + UPDATE_ID)
+                .willReturn(aResponse().withStatus(204)));
     }
 
     @AfterEach
