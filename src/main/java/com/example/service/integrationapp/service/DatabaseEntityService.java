@@ -55,7 +55,11 @@ public class DatabaseEntityService {
         return repository.save(forSave);
     }
 
-    @CacheEvict(cacheNames = AppCacheProperties.CacheNames.DATABASE_ENTITIES_BY_ID, key = "#id", beforeInvocation = true)
+    @Caching(evict = {
+            @CacheEvict(value = "databaseEntities", allEntries = true),
+            @CacheEvict(value = "databaseEntityByName", allEntries = true)
+    })
+    //@CacheEvict(cacheNames = AppCacheProperties.CacheNames.DATABASE_ENTITIES_BY_ID, key = "#id", beforeInvocation = true)
     public DatabaseEntity update(UUID id, DatabaseEntity entity) {
         DatabaseEntity entityForUpdate = findById(id);
 
@@ -64,7 +68,11 @@ public class DatabaseEntityService {
         return repository.save(entityForUpdate);
     }
 
-    @CacheEvict(cacheNames = AppCacheProperties.CacheNames.DATABASE_ENTITIES_BY_ID, key = "#id", beforeInvocation = true)
+    @Caching(evict = {
+            @CacheEvict(value = "databaseEntities", allEntries = true),
+            @CacheEvict(value = "databaseEntityByName", allEntries = true)
+    })
+    //@CacheEvict(cacheNames = AppCacheProperties.CacheNames.DATABASE_ENTITIES_BY_ID, key = "#id", beforeInvocation = true)
     public void deleteById(UUID id) {
         repository.deleteById(id);
     }

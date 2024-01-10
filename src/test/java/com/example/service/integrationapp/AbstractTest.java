@@ -44,7 +44,7 @@ import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMoc
 @Testcontainers
 public class AbstractTest {
     public static final UUID UPDATE_ID = UUID.fromString("0612f39e-d124-4226-a595-95428168188f");
-    public static final Instant ENTITY_DATE = Instant.parse("2100-01-01 00:00:00.782169 +00:00");
+    public static final Instant ENTITY_DATE = Instant.parse("2100-01-01T00:00:00Z");
 
     @Autowired
     protected MockMvc mockMvc;
